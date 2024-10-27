@@ -20,19 +20,25 @@ df = pd.read_csv(file_path)
 print(df.head())
 print("Test")
 
+
+
+#Make of function for this
+#positive and negetive scores. if +, then can give 0.5
 ## iterate through the dataset, headline collum, get each headline that will be he sentance
 #iterate through data set
 #ss is array of score.
 scores = []
-for sentence in df["headline"]:
+for sentence in df["summary"]:
     sid = SentimentIntensityAnalyzer()
-    ss = sid.polarity_scores(sentence)
+    ss = sid.polarity_scores(str(sentence))
     sorted_ss = sorted(ss)
      #add a collum
+    temp = []
     for k in sorted(ss):
-        scores.append(ss[k])
-        break
-    
+        temp.append(ss[k])
+    scores.append(temp)
+
 df["sentiment_score"] = scores
-print(df.head())
+#print(df.head())
 print(df["sentiment_score"])
+print(scores)
