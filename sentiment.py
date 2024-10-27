@@ -14,3 +14,4 @@ filename = f"{stock}.csv"
 file_path = os.path.join(directory_name, filename)
 df = pd.read_csv(file_path)
 print(df.head())
+print("Test")
