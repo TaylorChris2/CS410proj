@@ -86,3 +86,14 @@ print(headlines.head())
 
 print(headlines.tail())
 
+
+directory_name = 'data'
+
+os.makedirs(directory_name, exist_ok=True)
+stock = 'AAPL'
+filename = f"{stock}.csv"
+file_path = os.path.join(directory_name, filename)
+headlines.to_csv(file_path)
+
+
+
