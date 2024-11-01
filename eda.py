@@ -83,7 +83,7 @@ def news(stock):
 
 
 
-headlines = news('AAPL')
+headlines = news('INTC')
 print(headlines.shape)
 
 print(headlines.head())
@@ -96,7 +96,7 @@ print(headlines.dtypes)
 directory_name = 'data'
 
 os.makedirs(directory_name, exist_ok=True)
-stock = 'AAPL'
+stock = 'INTC'
 filename = f"{stock}.csv"
 file_path = os.path.join(directory_name, filename)
 headlines.to_csv(file_path)
