@@ -5,19 +5,16 @@ import os
 from dotenv import load_dotenv
 from urllib.request import urlopen
 from urllib.request import Request
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 
 load_dotenv()
 api_key = os.getenv('SECRET_KEY')
 
-from datetime import datetime, timedelta
-
-from datetime import datetime, timedelta
 
 def get_dates():
 
-    end_date = datetime.today()
-    start_date = end_date - timedelta(days=364)
+    end_date = datetime.now(timezone.utc).date()
+    start_date = end_date - timedelta(days=365)
 
 
     date_ranges = []
