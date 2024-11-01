@@ -18,27 +18,25 @@ filename = f"{stock}.csv"
 file_path = os.path.join(directory_name, filename)
 df = pd.read_csv(file_path)
 print(df.head())
-print("Test")
 
 
 
-#Make of function for this
-#positive and negetive scores. if +, then can give 0.5
-## iterate through the dataset, headline collum, get each headline that will be he sentance
-#iterate through data set
-#ss is array of score.
-scores = []
-for sentence in df["summary"]:
+
+def sentiment_analysis(news):
     sid = SentimentIntensityAnalyzer()
-    ss = sid.polarity_scores(str(sentence))
-    sorted_ss = sorted(ss)
-     #add a collum
-    temp = []
-    for k in sorted(ss):
-        temp.append(ss[k])
-    scores.append(temp)
+    scores = pd.DataFrame(df['headline'].astype(str).apply(sid.polarity_scores).to_list())
+    news['sentiment_scores'] = scores['compound']
+    return news
 
-df["sentiment_score"] = scores
-#print(df.head())
-print(df["sentiment_score"])
-print(scores)
+def aggregation(df):
+    df['timestamp'] = df['timestamp'].apply(lambda x : x[:10])
+    df['timestamp'] = pd.to_datetime(df['timestamp'], errors='coerce')
+    final_news_df = df.groupby('timestamp', as_index = False)['sentiment_scores'].mean()
+    final_news_df.sort_values(by='timestamp', inplace=True)
+    return final_news_df
+
+df = sentiment_analysis(df)
+final_df = aggregation(df)
+
+print(final_df.shape)
+print(final_df.head())

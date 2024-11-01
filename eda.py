@@ -17,7 +17,7 @@ from datetime import datetime, timedelta
 def get_dates():
 
     end_date = datetime.today()
-    start_date = end_date - timedelta(days=365)
+    start_date = end_date - timedelta(days=364)
 
 
     date_ranges = []
@@ -44,6 +44,8 @@ def get_dates():
         use_6_day_interval = not use_6_day_interval
 
     return date_ranges
+
+
 
 
 
@@ -79,12 +81,16 @@ def news(stock):
     final_df = pd.concat(news_arr)
     return final_df
 
+
+
 headlines = news('AAPL')
 print(headlines.shape)
 
 print(headlines.head())
 
 print(headlines.tail())
+
+print(headlines.dtypes)
 
 
 directory_name = 'data'
