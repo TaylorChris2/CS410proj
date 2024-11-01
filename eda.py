@@ -79,12 +79,15 @@ def news(stock):
     final_df = pd.concat(news_arr)
     return final_df
 
+
 headlines = news('AAPL')
 print(headlines.shape)
 
 print(headlines.head())
 
 print(headlines.tail())
+
+print(headlines.dtypes)
 
 
 directory_name = 'data'
