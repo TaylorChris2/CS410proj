@@ -12,12 +12,12 @@ import nltk
 nltk.download('vader_lexicon')
 
 
-stock = 'AAPL'
+stock = 'INTC'
 directory_name = 'data'
 filename = f"{stock}.csv"
 file_path = os.path.join(directory_name, filename)
 df = pd.read_csv(file_path)
-print(df.head())
+print(df.columns)
 
 
 
@@ -33,10 +33,19 @@ def aggregation(df):
     df['timestamp'] = pd.to_datetime(df['timestamp'], errors='coerce')
     final_news_df = df.groupby('timestamp', as_index = False)['sentiment_scores'].mean()
     final_news_df.sort_values(by='timestamp', inplace=True)
+    # print(final_news_df.columns, " ", type(final_news_df))
     return final_news_df
 
 df = sentiment_analysis(df)
+print(df.columns)
 final_df = aggregation(df)
+print(final_df.columns)
 
-print(final_df.shape)
-print(final_df.head())
+# print(final_df.shape)
+# print(final_df.head())
+directory_name = 'data'
+filename = f"{stock}_sentiment.csv"
+file_path = os.path.join(directory_name, filename)
+final_df.to_csv(file_path)
+
+
