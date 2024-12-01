@@ -20,7 +20,7 @@ hist['timestamp'] = hist['timestamp'].apply(lambda x: x.strftime('%Y-%m-%d'))
 print(hist.head())
 
 # Retrieve news data from CSV and update timestamp to format year:month:day
-news_data = pd.read_csv("data/INTC.csv")
+news_data = pd.read_csv("data/INTC_sentiment.csv")                        #Khushal  : Made a change here to use {stock_name}_sentiment.csv
 # news_data['timestamp'] = news_data['timestamp'].apply(lambda x: x[:10])
 news_data = sentiment_analysis(news_data)
 news_data = aggregation(news_data)
@@ -32,12 +32,18 @@ news_and_prices = pd.merge(hist, news_data, on='timestamp', how='inner')
 print(news_and_prices.head())
 print(news_and_prices.shape)
 
+stock = 'INTC'
+directory_name = 'data'
+filename = f"{stock}_final.csv"
+file_path = os.path.join(directory_name, filename)
+news_and_prices.to_csv(file_path)
+
 # Get the max price for every day in the past year
 # news_and_prices = news_and_prices.groupby("timestamp").agg({"Open" : "max"})
 # print(news_and_prices.head())
 # print(news_and_prices.shape)
 
-# # Normalize the stock prices for the past year
+# Normalize the stock prices for the past year
 news_and_prices["Normalized_prices"] = (news_and_prices["Open"] - news_and_prices["Open"].min()) / (news_and_prices["Open"].max() - news_and_prices["Open"].min())
 news_and_prices["Normalized_scores"] = (news_and_prices["sentiment_scores"] - news_and_prices["sentiment_scores"].min()) / (news_and_prices["sentiment_scores"].max() - news_and_prices["sentiment_scores"].min())
 
