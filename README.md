@@ -25,6 +25,11 @@
   ~~~
 
 ## Run the Code
+   Navigate to the folder where the project is located and then run the following command in your terminal
+
+   ~~~python
+   pip install -r "requirements.txt"
+   ~~~
 
    Naviage to the main.py file and then run 
 
