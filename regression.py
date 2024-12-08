@@ -11,7 +11,7 @@ import matplotlib.pyplot as plt
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LinearRegression
 from sklearn.metrics import mean_absolute_error, root_mean_squared_error
-from sklearn.preprocessing import MinMaxScaler
+from sklearn.preprocessing import MinMaxScaler, StandardScaler
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import  Dense, Dropout, LSTM, Bidirectional
 # from sentiment import sentiment_analysis, aggregation
@@ -22,6 +22,7 @@ filename = f"{stock}_final.csv"
 file_path = os.path.join(directory_name, filename)
 
 df = pd.read_csv(file_path)
+
 
 def temp_func(score):
     if score < 0:
@@ -46,21 +47,29 @@ def pre_processing(df, columns):
     df['sentiment_score_lag'] = df['sentiment_scores'].shift(1)
     df = df.dropna()
     return df
+def pre_processing1(df, columns):
+    df['timestamp'] = pd.to_datetime(df['timestamp'])
+    df['quarter'] = df['timestamp'].apply(is_quarter_end)
+    df['sentiment_scores'] = df['sentiment_scores'].apply(temp_func)
+    df = df[columns]
+    df = df.dropna()
+    return df
+
 
 regression_columns = ['timestamp', 'Open', 'High', 'Low', 'Close', 'sentiment_scores', 'quarter']
-target = ['']
+target = ['Close']
 
-df = pre_processing(df, regression_columns)
+df_lr = pre_processing(df, regression_columns)
 
 print("pre_processed data")
 
 features = ['timestamp','Open', 'High', 'Low','sentiment_scores', 'sentiment_score_lag','Close_Lag','quarter']
 target = ['Close']
-X = df[features]
-y = df[target]
+X = df_lr[features]
+y = df_lr[target]
 
 def split_data(X, y):    
-    split_index = split_value = int(len(X) * 0.8)
+    split_value = int(len(X) * 0.8)
     X_train, y_train = X.iloc[:split_value], y.iloc[:split_value]
     X_test, y_test = X.iloc[split_value:], y.iloc[split_value:]
     train_dates = X_train['timestamp'].astype(str)
@@ -104,6 +113,7 @@ def linear_regression(X_train, X_test, y_train, y_test):
     tuples = list(zip(y_complete, predictions_complete))
     df = pd.DataFrame(tuples,
                     columns=['actual', 'predicted'])
+    print(df.shape)
     return df, mae_test, mae_train, rmse_test, rmse_train
 
 predictions_lr, mae_test, mae_train, rmse_test, rmse_train = linear_regression(X_train, X_test, y_train, y_test)
@@ -129,13 +139,17 @@ predictions_lr.to_csv(file_path)
 
 
 ##### All code for LSTM from here on
-Ms = MinMaxScaler()
-numerical_cols = ['Open', 'High', 'Low', 'Close_Lag']
-X_lstm = X.copy()
-y_lstm = y.copy()
-X_lstm[numerical_cols] = Ms.fit_transform(X_lstm[numerical_cols])
-y_lstm = Ms.fit_transform(y_lstm)
+scaler = StandardScaler()
+df_lstm = pre_processing1(df, regression_columns)
+
+features_lstm = ['timestamp','Open', 'High', 'Low','sentiment_scores','quarter']
+target_lstm = ['Close']
+numerical_cols = ['Open', 'High', 'Low']
+X_lstm = df_lstm[features_lstm]
+y_lstm = df_lstm[target_lstm]
 X_lstm.drop('timestamp', axis = 1, inplace = True)
+X_lstm[numerical_cols] = scaler.fit_transform(X_lstm[numerical_cols])
+y_lstm = scaler.fit_transform(y_lstm)
 
 def create_sequences(X, y, n_steps):
     X_seq = []
@@ -143,10 +157,14 @@ def create_sequences(X, y, n_steps):
 
     for i in range(n_steps, len(X)):
         X_seq.append(X.iloc[i - n_steps : i].values)
-        y_seq.append(y.iloc[i])
+        y_seq.append(y[i])
     return np.array(X_seq), np.array(y_seq)
 
-X_sequences, y_sequences = create_sequences(X_lstm, y, n_steps=3)
+X_sequences, y_sequences = create_sequences(X_lstm, y_lstm, n_steps=3)
+
+print("X sequences shape:", X_sequences.shape) 
+print("y sequences shape:", y_sequences.shape)
+
 
 X_train, X_test, y_train, y_test = lstm_split(X_sequences, y_sequences)
 
@@ -161,13 +179,15 @@ def LSTM_regression(X_train, y_train, X_test, y_test):
     model.add(Dropout(0.1)) 
     model.add(Dense(units = 1))
     model.compile(loss='mean_squared_error', optimizer='adam', metrics=['mean_absolute_error'])
-    model.fit(X_train, y_train, epochs=30,validation_data=(X_test, y_test), verbose=1)
+    model.fit(X_train, y_train, epochs=100,validation_data=(X_test, y_test), verbose=1)
     test_predicted = model.predict(X_test)
     train_predicted = model.predict(X_train)
-    scaled_test_predictions = Ms.inverse_transform(np.hstack([test_predicted, np.zeros((test_predicted.shape[0], 3))]))[:,0]
-    scaled_train_predictions = Ms.inverse_transform(np.hstack([train_predicted, np.zeros((train_predicted.shape[0], 3))]))[:,0]
-    scaled_actual_y_train = Ms.inverse_transform(y_train)
-    scaled_actual_y_test = Ms.inverse_transform(y_test)
+    # scaled_test_predictions = Ms.inverse_transform(np.hstack([test_predicted, np.zeros((test_predicted.shape[0], 3))]))[:,0]
+    # scaled_train_predictions = Ms.inverse_transform(np.hstack([train_predicted, np.zeros((train_predicted.shape[0], 3))]))[:,0]
+    scaled_test_predictions = scaler.inverse_transform(test_predicted)
+    scaled_train_predictions = scaler.inverse_transform(train_predicted)
+    scaled_actual_y_train = scaler.inverse_transform(y_train)
+    scaled_actual_y_test = scaler.inverse_transform(y_test)
     mae_test =  mean_absolute_error(scaled_actual_y_test, scaled_test_predictions)
     mae_train = mean_absolute_error(scaled_actual_y_train, scaled_train_predictions)
 
@@ -196,6 +216,9 @@ print("LSTM Training RMSE:", round(rmse_train_lstm, 5), '\n')
 
 filename_lstm = f"{stock}_predictions_lstm.csv"
 file_path_lstm = os.path.join(directory_name, filename_lstm)
+
+predictions_lstm['Date'] = np.array(df['timestamp'])[3:]
+predictions_lstm.set_index('Date', inplace=True)
 predictions_lstm.to_csv(file_path_lstm)
     
 
