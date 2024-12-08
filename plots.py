@@ -101,8 +101,9 @@ def lstm_plot_predictions(stock):
     # Show plot
     plt.show()
 
-# regression_plot("INTC")
-# lstm_plot("INTC")
+# stock = 'NVDA'
+# regression_plot(stock)
+# lstm_plot(stock)
 
-# regression_plot_predictions("INTC")
-# lstm_plot_predictions("INTC")
+# regression_plot_predictions(stock)
+# lstm_plot_predictions(stock)

@@ -78,23 +78,23 @@ def news(stock):
 
 
 
-headlines = news('NVDA')
-print(headlines.shape)
+# headlines = news('NVDA')
+# print(headlines.shape)
 
-print(headlines.head())
+# print(headlines.head())
 
-print(headlines.tail())
+# print(headlines.tail())
 
-print(headlines.dtypes)
+# print(headlines.dtypes)
 
 
-directory_name = 'data'
+# directory_name = 'data'
 
-os.makedirs(directory_name, exist_ok=True)
-stock = 'NVDA'
-filename = f"{stock}.csv"
-file_path = os.path.join(directory_name, filename)
-headlines.to_csv(file_path)
+# os.makedirs(directory_name, exist_ok=True)
+# stock = 'NVDA'
+# filename = f"{stock}.csv"
+# file_path = os.path.join(directory_name, filename)
+# headlines.to_csv(file_path)
 
 
 
