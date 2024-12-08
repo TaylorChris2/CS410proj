@@ -11,7 +11,7 @@
 
   ~~~python
   ./venv/Scripts/activate/ (for Windows)
-  source ./venv/bin/activate (for Mac
+  source ./venv/bin/activate (for Mac)
 
   ~~~
 
