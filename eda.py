@@ -46,19 +46,17 @@ def get_dates():
 
 
 
-
-
 def news(stock):
     global api_key
     finnhub_client = finnhub.Client(api_key=api_key)
     from_date = ''
     to_date = ''
     news_arr = []
-    call_count = 60
     dates = get_dates()
     for i in dates:
         from_date = i[0]
         to_date = i[1]
+        print(from_date, to_date)
         res = finnhub_client.company_news(stock, _from=from_date, to=to_date)
         df = pd.DataFrame(res) \
                             .rename(columns={
@@ -80,23 +78,23 @@ def news(stock):
 
 
 
-headlines = news('INTC')
-print(headlines.shape)
+# headlines = news('NVDA')
+# print(headlines.shape)
 
-print(headlines.head())
+# print(headlines.head())
 
-print(headlines.tail())
+# print(headlines.tail())
 
-print(headlines.dtypes)
+# print(headlines.dtypes)
 
 
-directory_name = 'data'
+# directory_name = 'data'
 
-os.makedirs(directory_name, exist_ok=True)
-stock = 'INTC'
-filename = f"{stock}.csv"
-file_path = os.path.join(directory_name, filename)
-headlines.to_csv(file_path)
+# os.makedirs(directory_name, exist_ok=True)
+# stock = 'NVDA'
+# filename = f"{stock}.csv"
+# file_path = os.path.join(directory_name, filename)
+# headlines.to_csv(file_path)
 
 
 

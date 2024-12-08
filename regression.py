@@ -12,16 +12,16 @@ from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LinearRegression
 from sklearn.metrics import mean_absolute_error, root_mean_squared_error
 from sklearn.preprocessing import MinMaxScaler, StandardScaler
-from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import  Dense, Dropout, LSTM, Bidirectional
+from tensorflow.keras.models import Sequential # type: ignore
+from tensorflow.keras.layers import  Dense, Dropout, LSTM, Bidirectional # type: ignore
 # from sentiment import sentiment_analysis, aggregation
 
-stock = 'INTC'
-directory_name = 'data'
-filename = f"{stock}_final.csv"
-file_path = os.path.join(directory_name, filename)
+# stock = 'NVDA'
+# directory_name = 'data'
+# filename = f"{stock}_final.csv"
+# file_path = os.path.join(directory_name, filename)
 
-df = pd.read_csv(file_path)
+# df = pd.read_csv(file_path)
 
 
 def temp_func(score):
@@ -56,17 +56,17 @@ def pre_processing1(df, columns):
     return df
 
 
-regression_columns = ['timestamp', 'Open', 'High', 'Low', 'Close', 'sentiment_scores', 'quarter']
-target = ['Close']
+# regression_columns = ['timestamp', 'Open', 'High', 'Low', 'Close', 'sentiment_scores', 'quarter']
+# target = ['Close']
 
-df_lr = pre_processing(df, regression_columns)
+# df_lr = pre_processing(df, regression_columns)
 
-print("pre_processed data")
+# print("pre_processed data")
 
-features = ['timestamp','Open', 'High', 'Low','sentiment_scores', 'sentiment_score_lag','Close_Lag','quarter']
-target = ['Close']
-X = df_lr[features]
-y = df_lr[target]
+# features = ['timestamp','Open', 'High', 'Low','sentiment_scores', 'sentiment_score_lag','Close_Lag','quarter']
+# target = ['Close']
+# X = df_lr[features]
+# y = df_lr[target]
 
 def split_data(X, y):    
     split_value = int(len(X) * 0.8)
@@ -92,8 +92,8 @@ def lstm_split(X_sequences, y_sequences):
     return X_train, X_test, y_train, y_test
 
 
-print("split data")
-X_train, X_test, y_train, y_test, train_dates, test_dates = split_data(X, y)
+# print("split data")
+# X_train, X_test, y_train, y_test, train_dates, test_dates = split_data(X, y)
 
 def linear_regression(X_train, X_test, y_train, y_test):
     model = LinearRegression()
@@ -116,40 +116,33 @@ def linear_regression(X_train, X_test, y_train, y_test):
     print(df.shape)
     return df, mae_test, mae_train, rmse_test, rmse_train
 
-predictions_lr, mae_test, mae_train, rmse_test, rmse_train = linear_regression(X_train, X_test, y_train, y_test)
-
-print("---------regession results-------- \n\n")
-
-print("Linear Regression Testing MAE:", round(mae_test, 5), '\n')
-print("Linear Regression Training MAE:", round(mae_train, 5), '\n')
-
-print("Linear Regression Testing RMSE:", round(rmse_test, 5), '\n')
-print("Linear Regression Training RMSE:", round(rmse_train, 5), '\n')
+# predictions_lr, mae_test, mae_train, rmse_test, rmse_train = linear_regression(X_train, X_test, y_train, y_test)
 
 
-stock = 'INTC'
-directory_name = 'data'
-filename = f"{stock}_predictions.csv"
-file_path = os.path.join(directory_name, filename)
 
-full_dates = train_dates.tolist() + test_dates.tolist()
-predictions_lr['Date'] = full_dates
-predictions_lr.set_index('Date', inplace=True)
-predictions_lr.to_csv(file_path)
+# stock = 'NVDA'
+# directory_name = 'data'
+# filename = f"{stock}_predictions.csv"
+# file_path = os.path.join(directory_name, filename)
+
+# full_dates = train_dates.tolist() + test_dates.tolist()
+# predictions_lr['Date'] = full_dates
+# predictions_lr.set_index('Date', inplace=True)
+# predictions_lr.to_csv(file_path)
 
 
 ##### All code for LSTM from here on
-scaler = StandardScaler()
-df_lstm = pre_processing1(df, regression_columns)
+# scaler = StandardScaler()
+# df_lstm = pre_processing1(df, regression_columns)
 
-features_lstm = ['timestamp','Open', 'High', 'Low','sentiment_scores','quarter']
-target_lstm = ['Close']
-numerical_cols = ['Open', 'High', 'Low']
-X_lstm = df_lstm[features_lstm]
-y_lstm = df_lstm[target_lstm]
-X_lstm.drop('timestamp', axis = 1, inplace = True)
-X_lstm[numerical_cols] = scaler.fit_transform(X_lstm[numerical_cols])
-y_lstm = scaler.fit_transform(y_lstm)
+# features_lstm = ['timestamp','Open', 'High', 'Low','sentiment_scores','quarter']
+# target_lstm = ['Close']
+# numerical_cols = ['Open', 'High', 'Low']
+# X_lstm = df_lstm[features_lstm]
+# y_lstm = df_lstm[target_lstm]
+# X_lstm.drop('timestamp', axis = 1, inplace = True)
+# X_lstm[numerical_cols] = scaler.fit_transform(X_lstm[numerical_cols])
+# y_lstm = scaler.fit_transform(y_lstm)
 
 def create_sequences(X, y, n_steps):
     X_seq = []
@@ -160,20 +153,20 @@ def create_sequences(X, y, n_steps):
         y_seq.append(y[i])
     return np.array(X_seq), np.array(y_seq)
 
-X_sequences, y_sequences = create_sequences(X_lstm, y_lstm, n_steps=3)
+# X_sequences, y_sequences = create_sequences(X_lstm, y_lstm, n_steps=3)
 
-print("X sequences shape:", X_sequences.shape) 
-print("y sequences shape:", y_sequences.shape)
-
-
-X_train, X_test, y_train, y_test = lstm_split(X_sequences, y_sequences)
+# print("X sequences shape:", X_sequences.shape) 
+# print("y sequences shape:", y_sequences.shape)
 
 
-print("X train sequences shape:", X_train.shape) 
-print("y train sequences shape:", y_train.shape)
+# X_train, X_test, y_train, y_test = lstm_split(X_sequences, y_sequences)
+
+
+# print("X train sequences shape:", X_train.shape) 
+# print("y train sequences shape:", y_train.shape)
 
 #Code adapted from https://www.analyticsvidhya.com/blog/2021/12/stock-price-prediction-using-lstm/
-def LSTM_regression(X_train, y_train, X_test, y_test):
+def LSTM_regression(X_train, y_train, X_test, y_test, scaler):
     model = Sequential()
     model.add(LSTM(units=50, return_sequences=False, input_shape = (X_train.shape[1], X_train.shape[2])))
     model.add(Dropout(0.1)) 
@@ -201,25 +194,17 @@ def LSTM_regression(X_train, y_train, X_test, y_test):
                     columns=['actual', 'predicted'])
     return df, mae_test, mae_train, rmse_test, rmse_train
 
-predictions_lstm, mae_test_lstm, mae_train_lstm, rmse_test_lstm, rmse_train_lstm = LSTM_regression(X_train, y_train, X_test, y_test)
-
-print("---------LSTM regession results-------- \n\n")
-
-print("LSTM Testing MAE:", round(mae_test_lstm, 5), '\n')
-print("LSTM Training MAE:", round(mae_train_lstm, 5), '\n')
-
-print("LSTM Testing RMSE:", round(rmse_test_lstm, 5), '\n')
-print("LSTM Training RMSE:", round(rmse_train_lstm, 5), '\n')
+# predictions_lstm, mae_test_lstm, mae_train_lstm, rmse_test_lstm, rmse_train_lstm = LSTM_regression(X_train, y_train, X_test, y_test)
 
 
 
 
-filename_lstm = f"{stock}_predictions_lstm.csv"
-file_path_lstm = os.path.join(directory_name, filename_lstm)
+# filename_lstm = f"{stock}_predictions_lstm.csv"
+# file_path_lstm = os.path.join(directory_name, filename_lstm)
 
-predictions_lstm['Date'] = np.array(df['timestamp'])[3:]
-predictions_lstm.set_index('Date', inplace=True)
-predictions_lstm.to_csv(file_path_lstm)
+# predictions_lstm['Date'] = np.array(df['timestamp'])[3:]
+# predictions_lstm.set_index('Date', inplace=True)
+# predictions_lstm.to_csv(file_path_lstm)
     
 
 
