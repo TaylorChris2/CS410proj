@@ -14,7 +14,7 @@
   source ./venv/bin/activate (for Mac)
 
   ~~~
-
+More information on creating a virtual environment and installing requirements is present [here](https://frankcorso.dev/setting-up-python-environment-venv-requirements.html) 
   
   Then create a new file in your source directory called ` .env `
 
