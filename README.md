@@ -23,3 +23,12 @@
   ~~~
     API_KEY = "the key you got from Finnhub"
   ~~~
+
+## Run the Code
+
+   Naviage to the main.py file and then run 
+
+   ~~~python
+   python3 ./main.py
+   ~~~
+This will generate 4 graphs for which the explanations are below
