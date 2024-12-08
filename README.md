@@ -10,8 +10,8 @@
   To activate the environment, in the same directory run 
 
   ~~~python
-  ./venv/Scripts/activate/ (for Windows)
-  source ./venv/bin/activate (for Mac)
+  .venv/Scripts/activate/ (for Windows)
+  source .venv/bin/activate (for Mac)
 
   ~~~
 More information on creating a virtual environment and installing requirements is present [here](https://frankcorso.dev/setting-up-python-environment-venv-requirements.html) 
