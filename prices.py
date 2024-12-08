@@ -11,7 +11,7 @@ import matplotlib.pyplot as plt
 from sentiment import sentiment_analysis, aggregation
 
 # Get stock data from the past year
-aapl = yf.Ticker("INTC")
+aapl = yf.Ticker("NVDA")
 hist = aapl.history("1y")
 
 # Create column for timestamp with year:month:day
@@ -20,7 +20,7 @@ hist['timestamp'] = hist['timestamp'].apply(lambda x: x.strftime('%Y-%m-%d'))
 print(hist.head())
 
 # Retrieve news data from CSV and update timestamp to format year:month:day
-news_data = pd.read_csv("data/INTC_sentiment.csv")                        #Khushal  : Made a change here to use {stock_name}_sentiment.csv
+news_data = pd.read_csv("data/NVDA_sentiment.csv")                        #Khushal  : Made a change here to use {stock_name}_sentiment.csv
 # news_data['timestamp'] = news_data['timestamp'].apply(lambda x: x[:10])
 news_data = sentiment_analysis(news_data)
 news_data = aggregation(news_data)
@@ -32,7 +32,7 @@ news_and_prices = pd.merge(hist, news_data, on='timestamp', how='inner')
 print(news_and_prices.head())
 print(news_and_prices.shape)
 
-stock = 'INTC'
+stock = 'NVDA'
 directory_name = 'data'
 filename = f"{stock}_final.csv"
 file_path = os.path.join(directory_name, filename)

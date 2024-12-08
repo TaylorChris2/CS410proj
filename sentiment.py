@@ -12,7 +12,7 @@ import nltk
 nltk.download('vader_lexicon')
 
 
-stock = 'INTC'
+stock = 'NVDA'
 directory_name = 'data'
 filename = f"{stock}.csv"
 file_path = os.path.join(directory_name, filename)
