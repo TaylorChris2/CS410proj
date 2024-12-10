@@ -1,6 +1,6 @@
 # CS410proj
 
-##   Make sure you change your current working directory to the project directory using cd in terminal
+##   We strongly recommend using Vscode. Make sure you change your current working directory to the project directory using cd in terminal of Vscode
 
 ## Environment Setup (Strongly recommend this. You can use your global environment if you are more comfortable with that)
    Navigate to the source directory and create a python virtual environment using
