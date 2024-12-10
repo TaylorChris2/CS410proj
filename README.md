@@ -43,7 +43,7 @@ More information on creating a virtual environment and installing requirements i
 This will generate 5 graphs. And will print out RMSE and MAE values for LSTM and Linear Regression in the terminal
 
 
-References 
+## References 
    - https://frankcorso.dev/setting-up-python-environment-venv-requirements.html
    - https://towardsdatascience.com/predicting-stock-prices-using-a-keras-lstm-model-4225457f0233
    - https://ibkrcampus.com/ibkr-quant-news/exploring-the-finnhub-io-api/
