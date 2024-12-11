@@ -17,7 +17,7 @@
 
   ~~~
 
-You might run into problems with security access if your have a powershell terminal. In which case you can resolve it using suggestions [here]                             (https://stackoverflow.com/questions/18713086/virtualenv-wont-activate-on-windows) or create the virtual env using Vscode ui using the instricutions provided [here](https://code.visualstudio.com/docs/python/environments).
+You might run into problems with security access if your have a powershell terminal. In which case you can resolve it using suggestions [here](https://stackoverflow.com/questions/18713086/virtualenv-wont-activate-on-windows) or create the virtual env using Vscode ui using the instricutions provided [here](https://code.visualstudio.com/docs/python/environments).
 
 
 
