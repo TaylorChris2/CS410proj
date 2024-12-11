@@ -2,7 +2,7 @@
 
 ##   We strongly recommend using Vscode. Make sure you change your current working directory to the project directory using cd in terminal of Vscode
 
-## Environment Setup (Strongly recommend this. You can use your global environment if you are more comfortable with that)
+## Environment Setup (Strongly recommend this. You can use your global environment if you are more comfortable with that but you would have to manually install the packages)
    Navigate to the source directory and create a python virtual environment using
    
    ~~~python
