@@ -101,9 +101,34 @@ def lstm_plot_predictions(stock):
     # Show plot
     plt.show()
 
-# stock = 'NVDA'
+def both_plot_predictions(stock):
+    regression_actual, regression_predicted, LSTM_actual, LSTM_predicted = create_dfs(stock)
+
+    regression_split_value = int(0.8 * len(regression_actual))
+    LSTM_split_value = int(0.8 * len(regression_actual))
+
+    # Plotting
+    plt.figure(figsize=(12, 6))
+    # plt.plot(regression_actual[:regression_split_value+1], label='Actual Train Prices', color='blue')
+    plt.plot(range(regression_split_value, len(regression_actual)), regression_actual[regression_split_value:], label='Actual Test Prices', color='green')
+    plt.plot(range(regression_split_value, len(regression_actual)), regression_predicted[regression_split_value:], label='Predicted Regression Test Prices', color='black')
+
+
+    plt.plot(range(LSTM_split_value, len(LSTM_actual)), LSTM_predicted[LSTM_split_value:], label='Predicted LSTM Test Prices', color='red')
+
+    # Adding titles and labels
+    plt.title('Stock Price Predictions')
+    plt.xlabel('Day')
+    plt.ylabel('Price')
+    plt.legend()
+
+    # Show plot
+    plt.show()
+
+# stock = 'INTC'
 # regression_plot(stock)
 # lstm_plot(stock)
 
 # regression_plot_predictions(stock)
 # lstm_plot_predictions(stock)
+# both_plot_predictions(stock)
