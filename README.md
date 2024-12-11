@@ -16,6 +16,11 @@
   source venv/bin/activate (for Mac)
 
   ~~~
+
+``` You might run into problems with security access if your have a powershell terminal. In which case you can resolve it using suggestions [here]         (https://stackoverflow.com/questions/18713086/virtualenv-wont-activate-on-windows) or create the virtual env using Vscode ui using the instricutions provided [here](https://code.visualstudio.com/docs/python/environments).
+```
+
+
 Your terminal prompts will then change to show the virtual environment's name (venv)
 
 More information on creating a virtual environment and installing requirements is present [here](https://frankcorso.dev/setting-up-python-environment-venv-requirements.html) 
