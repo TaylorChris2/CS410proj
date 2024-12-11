@@ -39,6 +39,9 @@ More information on creating a virtual environment and installing requirements i
 
    ~~~python
    python3 ./main.py
+   or
+   python ./main.py
+
    ~~~
 This will generate 7 plots. And will print out RMSE and MAE values for LSTM and Linear Regression in the terminal
 
