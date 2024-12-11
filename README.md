@@ -40,8 +40,16 @@ More information on creating a virtual environment and installing requirements i
    ~~~python
    python3 ./main.py
    ~~~
-This will generate 5 graphs. And will print out RMSE and MAE values for LSTM and Linear Regression in the terminal
+This will generate 7 plots. And will print out RMSE and MAE values for LSTM and Linear Regression in the terminal
 
+The plots that will be outputted are described below, all values are in relation to the user defined stock on line 40:
+1. Normalized stock prices and sentiment values over the past year
+2. Percentage of positive, neutral, and negative documents over the past year
+3. Actual stock values over the past year and stock values predicted by our linear regression model over the past year
+4. Actual stock values over the past year and stock values predicted by our LSTM model over the past year
+5. Actual stock values over the past year and stock values predicted by our linear regression model for only our test data
+6. Actual stock values over the past year and stock values predicted by our LSTM model for only our test data
+7. Actual stock values, stock values predicted by our linear regression model, and stock values predicted by our LSTM model over only our test data
 
 ## References 
    - https://frankcorso.dev/setting-up-python-environment-venv-requirements.html
