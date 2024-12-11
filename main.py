@@ -32,11 +32,12 @@ from sentiment import sentiment_analysis, aggregation
 from eda import news 
 from plots import create_dfs, regression_plot, regression_plot_predictions, lstm_plot, lstm_plot_predictions, both_plot_predictions
 from regression import pre_processing, pre_processing1, split_data, lstm_split, linear_regression, LSTM_regression, create_sequences
+from prices import sentiment_plots
 
 directory_name = 'data'
 
 os.makedirs(directory_name, exist_ok=True)
-stock = 'INTC'
+stock = 'NVDA'
 filename = f"{stock}.csv"
 file_path = os.path.join(directory_name, filename)
 
@@ -149,6 +150,7 @@ print("LSTM Training MAE:", round(mae_train_lstm, 5), '\n')
 print("LSTM Testing RMSE:", round(rmse_test_lstm, 5), '\n')
 print("LSTM Training RMSE:", round(rmse_train_lstm, 5), '\n')
 
+sentiment_plots(stock)
 
 regression_plot(stock)
 lstm_plot(stock)
