@@ -29,13 +29,13 @@ More information on creating a virtual environment and installing requirements i
   ~~~
 
 ## Run the Code
-   Navigate to the folder where the project is located and then run the following command in your terminal
+   Navigate to the root directory of the project
 
    ~~~python
    pip install -r "requirements.txt"
    ~~~
 
-   Naviage to the main.py file and then run 
+   Then run 
 
    ~~~python
    python3 ./main.py
