@@ -117,7 +117,7 @@ def both_plot_predictions(stock):
     plt.plot(range(LSTM_split_value, len(LSTM_actual)), LSTM_predicted[LSTM_split_value:], label='Predicted LSTM Test Prices', color='red')
 
     # Adding titles and labels
-    plt.title('Stock Price Predictions')
+    plt.title(f'Stock Price Predictions for {stock}')
     plt.xlabel('Day')
     plt.ylabel('Price')
     plt.legend()
