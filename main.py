@@ -30,7 +30,7 @@ from tensorflow.keras.models import Sequential # type: ignore
 from tensorflow.keras.layers import  Dense, Dropout, LSTM, Bidirectional # type: ignore
 from sentiment import sentiment_analysis, aggregation
 from eda import news 
-from plots import create_dfs, regression_plot, regression_plot_predictions, lstm_plot, lstm_plot_predictions
+from plots import create_dfs, regression_plot, regression_plot_predictions, lstm_plot, lstm_plot_predictions, both_plot_predictions
 from regression import pre_processing, pre_processing1, split_data, lstm_split, linear_regression, LSTM_regression, create_sequences
 
 directory_name = 'data'
@@ -156,3 +156,4 @@ lstm_plot(stock)
 regression_plot_predictions(stock)
 lstm_plot_predictions(stock)
 
+both_plot_predictions(stock)
