@@ -25,7 +25,7 @@ More information on creating a virtual environment and installing requirements i
   Go to [Finnhub](https://finnhub.io/register) and get an api key which you should put in your ` .env ` folder in the following manner. You can use the free tier. 
 
   ~~~
-    API_KEY = "the key you got from Finnhub"
+    SECRET_KEY = "the key you got from Finnhub"
   ~~~
 
 ## Run the Code
